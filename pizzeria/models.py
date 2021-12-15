@@ -62,7 +62,7 @@ class OrderedPizza(models.Model):
     def __str__(self):
         return f'zamowiona pizza to {self.pizza_name} w ilosc {self.amount} za {self.amount * self.price}'
 
-
+print('huj')
 
 
 

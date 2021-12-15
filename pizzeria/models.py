@@ -1,79 +1,67 @@
 from django.db import models
 
 
-FOOD_TYPES = (
-    ('appetizer', 'appetizer'),
-    ('entree', 'entree'),
-    ('dessert', 'dessert'),
-)
-WEIGHT = (
-    ('kg', 'kilograms'),
-    ('dg', 'dekagrams'),
-    ('g', 'grams'),
-    ('t', 'tons')
-)
-
-
-class Pizzeria(models.Model):
+class PizzeriaLocal(models.Model):
     name = models.CharField(max_length=50)
     address = models.CharField(max_length=80)
-    phoneNumber = models.CharField(max_length=10)
+    phone_number = models.CharField(max_length=10)
 
     def __str__(self):
         return f'{self.name}'
 
 
-class Component(models.Model):
+class Topping(models.Model):
     name = models.CharField(max_length=100)
     price = models.DecimalField(decimal_places=2, max_digits=5)
-    weight = models.CharField(max_length=100, choices=WEIGHT)
     supplier = models.CharField(max_length=100)
 
     def __str__(self):
-        return f'component: {self.name}'
+        return f'topping: {self.name}'
 
 
-class Product(models.Model):
+class Pizza(models.Model):
     name = models.CharField(max_length=100)
+    price = models.DecimalField(decimal_places=2, max_digits=5)
     description = models.CharField(max_length=100)
-    type = models.CharField(max_length=100, choices=FOOD_TYPES)
-    components = models.ManyToManyField(
-        Component)
+    topping = models.ManyToManyField('Topping')
+    local = models.ForeignKey(PizzeriaLocal, on_delete=models.CASCADE)
 
     def __str__(self):
         return self.name
 
 
-class Menu(models.Model):
-    restaurant = models.OneToOneField(
-        Pizzeria,
-        on_delete=models.CASCADE,
-        primary_key=True,
-    )
-    products = models.ManyToManyField(Product)
-
-    def __str__(self):
-        return f'Menu from {self.restaurant}'
-
-
 class Payment(models.Model):
-    status = models.BooleanField(default=False)
+    STATUS_PAYMENT = (
+        ('not accepted', 'not accepted'),
+        ('accepted', 'accepted'),
+    )
+    status = models.CharField(max_length=100, choices=STATUS_PAYMENT, default='not accepted')
 
     def __str__(self):
         return f'{self.status}'
 
     def get_payment_confirm(self):
-        self.status = True
+        self.status = 'accepted'
         self.save()
 
 
-# class OrderProduct(models.Model):
-#     price = models.DecimalField(),
-#     name = models.ForeignKey(Order, on_delete=models.CASCADE, related_name='ordered_product')
-#
-#
-# class Order(models.Model):
-#     status = Payment
+class Order(models.Model):
+    # czy tu powinno byc takie polaczenie albo foreign key no i czy nie wstawic tego w payment
+    payment = models.OneToOneField(Payment, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return f'zamowienie o nr {self.pk} i statusie {self.payment}'
+
+
+class OrderedPizza(models.Model):
+    pizza_name = models.CharField(max_length=20)  # dlaczego tutaj nie moze byc ManyToManyField
+    amount = models.IntegerField(default=1)
+    price = models.DecimalField(decimal_places=2, max_digits=5)
+    order = models.ForeignKey(Order, models.CASCADE)
+
+    def __str__(self):
+        return f'zamowiona pizza to {self.pizza_name} w ilosc {self.amount} za {self.amount * self.price}'
+
 
 
 

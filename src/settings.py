@@ -30,7 +30,7 @@ INSTALLED_APPS = [
     'pizzeria',
     'order_system',
     'rest_framework',
-
+    'drf_api',
 ]
 
 MIDDLEWARE = [
@@ -118,3 +118,8 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+REST_FRAMEWORK = {
+    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
+    'PAGE_SIZE': 10
+}

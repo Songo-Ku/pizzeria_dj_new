@@ -1,0 +1,24 @@
+{% extends 'order_system/base.html' %}
+
+
+
+{% block content %}
+    {% if order %}
+        {{ order }} <br>
+        Lacznie do zapłaty: {{ total }}
+    {% endif %}
+    <br>
+    {% if products_in_order %}
+        To lista produktów dodanych do zamówienia: <br>
+        {% for product in products_in_order %}
+            product: {{ product.pizza_name }} <br>
+            price: {{ product.price }} <br>
+            amount: {{ product.amount }}
+        {% endfor %}
+    {% else %}
+        Twoja lista produktów w zamówieniu jest pusta
+    {% endif %}
+{% endblock %}
+
+
+

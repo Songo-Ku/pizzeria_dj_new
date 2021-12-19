@@ -1,0 +1,32 @@
+{% extends 'pizzeria/base.html' %}
+
+{% block content %}
+
+    <h3>Welcome in restaurant {{ object.name }}</h3>
+        {% if menu %}
+
+
+            {% for product in menu %}
+                <ul>
+                    <li>
+                        nazwa dania: <b>{{ product.name }}</b>
+                    </li>
+                    <li>
+                        numer dania: {{ forloop.counter }}
+                    </li>
+                     <li>
+                        opis: {{product.description}}
+                    </li>
+                    <li>
+                        price: {{product.price}}
+                    </li>
+                </ul>
+            {% endfor %}
+        {% else %}
+            Menu has not added products yet
+        {% endif %}
+
+
+
+
+{% endblock %}

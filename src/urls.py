@@ -14,8 +14,12 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path
+from django.urls import path, include
+
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('', include('pizzeria.urls')),
+    path('order-delivery/', include('order_system.urls'))
+    # path('api/order_system/', include('api.urls', namespace='api_pizzeria')),  # pytanie czy api powinno byc osobna aplikacja czy znajodwac sie w apkach
 ]

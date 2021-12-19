@@ -1,0 +1,23 @@
+{% extends 'pizzeria/base.html' %}
+
+{% block content %}
+
+<h1>Welcome in restaurant {{ object.name }}</h1>
+
+            <ul>
+                    <li>
+                        <a href="{% url 'pizzeria:restaurant-menu' object.id %}" class="btn btn-default">go to menu of restaurant {{ object.name }} </a>
+                    </li>
+                    <li>
+                        adress {{object.address}}
+                    </li>
+                    <li>
+                        phone_number: {{object.phone_number}}
+                    </li>
+            </ul>
+
+
+
+
+
+{% endblock %}

@@ -26,8 +26,10 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'pizzeria.apps.PizzeriaConfig',
-    # 'rest_framework',
+    # -----------------------------------------------------------
+    'pizzeria',
+    'order_system',
+    'rest_framework',
 
 ]
 
@@ -46,7 +48,7 @@ ROOT_URLCONF = 'src.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [BASE_DIR / 'pizzeria' / 'templates'],
+        'DIRS': [BASE_DIR / 'order_system' / 'templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [

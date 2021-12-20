@@ -16,7 +16,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from rest_framework import routers
-from drf_api import views
+from snippets import views
 
 router = routers.DefaultRouter()
 router.register(r'users', views.UserViewSet)
@@ -26,6 +26,8 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('pizzeria.urls')),
     path('order-delivery/', include('order_system.urls')),
-    path('api-auth/', include('rest_framework.urls', namespace='rest_framework'))
+    path('api-auth/', include('rest_framework.urls', namespace='rest_framework')),  # nie wiem po co to, na pewno nie dziala
+    path('api/', include('snippets.urls')),
+    path('router/', include(router.urls)),
     # path('api/order_system/', include('api.urls', namespace='api_pizzeria')),  # pytanie czy api powinno byc osobna aplikacja czy znajodwac sie w apkach
 ]

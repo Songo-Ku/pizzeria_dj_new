@@ -30,7 +30,7 @@ INSTALLED_APPS = [
     'pizzeria',
     'order_system',
     'rest_framework',
-    'drf_api',
+    'snippets',
 ]
 
 MIDDLEWARE = [

@@ -3,6 +3,17 @@ from rest_framework import viewsets, status, permissions
 from .serializers import UserSerializer, GroupSerializer, SnippetSerializer
 from snippets.models import Snippet
 from rest_framework import mixins, generics
+from .permissions import IsOwnerOrReadOnly
+
+
+class UserList(generics.ListAPIView):
+    queryset = User.objects.all()
+    serializer_class = UserSerializer
+
+
+class UserDetail(generics.RetrieveAPIView):
+    queryset = User.objects.all()
+    serializer_class = UserSerializer
 
 
 class UserViewSet(viewsets.ModelViewSet):
@@ -28,12 +39,16 @@ class SnippetList(mixins.ListModelMixin,
                   generics.GenericAPIView):
     queryset = Snippet.objects.all()
     serializer_class = SnippetSerializer
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
 
     def get(self, request, *args, **kwargs):
         return self.list(request, *args, **kwargs)
 
     def post(self, request, *args, **kwargs):
         return self.create(request, *args, **kwargs)
+
+    def perform_create(self, serializer):
+        serializer.save(owner=self.request.user)
 
 
 class SnippetDetail(mixins.RetrieveModelMixin,
@@ -42,6 +57,8 @@ class SnippetDetail(mixins.RetrieveModelMixin,
                     generics.GenericAPIView):
     queryset = Snippet.objects.all()
     serializer_class = SnippetSerializer
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly,
+                          IsOwnerOrReadOnly]
 
     def get(self, request, *args, **kwargs):
         return self.retrieve(request, *args, **kwargs)

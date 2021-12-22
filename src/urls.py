@@ -28,6 +28,7 @@ urlpatterns = [
     path('order-delivery/', include('order_system.urls')),
     path('api-auth/', include('rest_framework.urls', namespace='rest_framework')),  # to jest po to zeby bylo logowanie
     path('api/', include('snippets.urls')),
+    path('api-pizzeria/', include('pizzeria.urls')),
     path('router/', include(router.urls)),
     # path('api/order_system/', include('api.urls', namespace='api_pizzeria')),  # pytanie czy api powinno byc osobna aplikacja czy znajodwac sie w apkach
 ]

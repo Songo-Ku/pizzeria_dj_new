@@ -9,13 +9,9 @@ urlpatterns = format_suffix_patterns([
     path('', viewsets.api_root),
     path('pizzeria-restaurants/', viewsets.PizzeriaRestaurantList.as_view(), name='pizzeria-restaurant-list'),
     path('pizzeria-restaurants/<int:pk>/', viewsets.PizzeriaRestaurantDetail.as_view(), name='pizzeria-pizza-detail'),
-    path('pizza-viewsets/', viewsets.PizzaViewSets.as_view(), name='pizza-viewsets'),
-    path('pizza-create-list/', viewsets.PizzaCreateListView.as_view(), name='pizza-create-list'),
-
-
-
+    path('pizza-create-list/', viewsets.PizzaList.as_view(), name='pizza-create-list'),
+    path('pizza-create-list/<int:pk>/', viewsets.PizzaDetail.as_view(), name='pizza-detail-up-del'),
 ])
-
 
 
 
